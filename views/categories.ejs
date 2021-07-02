@@ -1,0 +1,20 @@
+<html>
+    <head>
+        <title>Админ-главная</title>
+    </head>
+
+    <body>
+
+        <% data.forEach(function(item) { %>
+            <p> <a href='admin/categories/<%= item.title_id %>'> <%= item.title %> </a> </p>
+        <% }); %>
+
+        <p><input type="button" value="Создать категорию" id="new"></p>
+        <script>
+            document.getElementById("new").addEventListener("click", function(e) {
+                document.location="http://localhost:3000/categories/new";
+            });
+        </script>
+
+    </body>
+</html>

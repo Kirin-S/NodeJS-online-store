@@ -1,0 +1,1 @@
+The file from the tables folder must be imported into phpMyAdmin.

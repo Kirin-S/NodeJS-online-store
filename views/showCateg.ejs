@@ -1,0 +1,86 @@
+<html>
+	<head>
+	</head>
+	
+	<body>
+		
+		<% if (data == "") { 
+			categ.forEach(function(item1) { %>
+			<input type="text" id="title" value='<%= item1.title %>'>
+			<input type="button" id="edit" value="Изменить категорию">
+			<input type="button" id="del" value="Удалить категорию">
+			<span id="ok"></span>
+			<script>
+				id = location.href.split('/')[4];
+				title = document.getElementById("title").value;
+				request = new XMLHttpRequest();
+
+				document.getElementById("edit").addEventListener("click", function(e){
+					arr = {id: id, title: document.getElementById('title').value};
+					request.open("PUT", "http://localhost:3000/categories/<%= item1.title_id%>", true);
+					request.setRequestHeader("Content-Type", "application/json");
+					request.send(JSON.stringify(arr));
+					request.onreadystatechange = function(){
+						if (request.readyState == 4) {
+							document.getElementById('ok').innerHTML = request.responseText + "<p><a href='http://localhost:3000/categories'>Вернуться на категории</a></p>";
+						}
+					}
+				});
+
+				document.getElementById("del").addEventListener("click", function(e){
+					arr = {id: id};
+					request.open("DELETE", "http://localhost:3000/categories/", true);
+					request.setRequestHeader("Content-Type", "application/json");
+					request.send(JSON.stringify(arr));
+					request.onreadystatechange = function(){
+						if (request.readyState == 4) {
+							document.getElementById('ok').innerHTML=request.responseText + "<p><a href='http://localhost:3000/categories'>Вернуться на категории</a></p>";
+						}
+					}
+				});
+			</script>
+			<%});%>
+		<% }  %>
+		
+		<% data.forEach(function(item) { %>
+
+			<p> Название: <%= item.title %> </p>
+			<p> Цена: <%= item.price %>$</p>
+			<p> Описание: <%= item.description %> </p>
+			<p>	<input type="text" id="title"></p>
+			<input type="button" id="edit" value="Изменить категорию">
+			<input type="button" id="del" value="Удалить категорию">
+			<span id="ok"></span>
+			<script>
+				id = location.href.split('/')[4];
+				title = document.getElementById("title").value;
+				request = new XMLHttpRequest();
+
+				document.getElementById("edit").addEventListener("click", function(e){
+					arr = {id: id, title: document.getElementById('title').value};
+					request.open("PUT", "http://localhost:3000/categories/<%= item.title_id %>", true);
+					request.setRequestHeader("Content-Type", "application/json");
+					request.send(JSON.stringify(arr));
+					request.onreadystatechange = function(){
+						if (request.readyState == 4) {
+							document.getElementById('ok').innerHTML = request.responseText + "<p><a href='http://localhost:3000/categories'>Вернуться на категории</a></p>";
+						}
+					}
+				});
+
+				document.getElementById("del").addEventListener("click", function(e){
+					arr = {id: id};
+					request.open("DELETE", "http://localhost:3000/categories/", true);
+					request.setRequestHeader("Content-Type", "application/json");
+					request.send(JSON.stringify(arr));
+					request.onreadystatechange = function(){
+						if (request.readyState == 4) {
+							document.getElementById('ok').innerHTML = request.responseText + "<p><a href='http://localhost:3000/categories'>Вернуться на категории</a></p>";
+						}
+					}
+				});
+			</script>
+		<% }); %>
+
+	</body>
+</html>

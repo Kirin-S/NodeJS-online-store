@@ -1,0 +1,98 @@
+<html>
+    <head>
+        <title>Главная</title>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+    </head>
+    <body>
+
+        <div class="cat_basket">
+            <div class="cat">
+                <% data.forEach(function(item) { %>
+                    <p> <a href='showItemList/<%= item.title_id %>'> <%= item.title %> </a> </p>
+                <% }); %>
+            </div>
+
+            <div class="user" id="user" align="right">
+                <a href="/reg">Регистрация/Логин</a>
+                <script>
+                    token=Cookies.get("auth");
+                    console.log(document.cookie);
+                    if(token.length>0)
+                    {
+                        $.ajax({
+                            method:"post",
+                            url:"reg/checkToken",
+                            headers:{'authorization':token,'sameSite':'None;Secure'},
+                            crossOrigin: true,
+							xhrFields: { withCredentials: true }
+                        })
+                        .then(response => {
+                            if (response.message==1)
+                            {
+                                u = document.getElementById('user');
+                                userName = localStorage.getItem('userName');
+                                userID = localStorage.getItem('userID');
+                                u.innerHTML = "ID="+userID+" Name= <a href='http://localhost:3000/userPage'>"+userName+'</a>';
+                            }
+                        });
+                    }
+                </script>
+            </div>
+
+            <div class="basket" align="center">
+                <a href="basket"><img src="basket.png"></a>
+                <!--<div id="item_count"></div> -->
+            </div>
+        </div>
+
+        <style>
+            .cat_basket{
+                display: grid;
+                grid-template-columns: 75% 15% 10%;
+            }
+            #item_count {
+                font-size: 1.3em;
+                position: relative;
+                top: -45px;
+                right: 2px;
+            }
+			.basket img{
+                position: relative;
+				width: 55px;
+				height: 50px;
+			}
+            .cat {
+                font-size: 1.3em;
+            }
+            .cat a:link{
+				color:rgb(55, 73, 151);
+                text-decoration: none;
+			}
+			.cat a:visited{
+				color:rgb(55, 73, 151);
+			}
+			.cat a:hover{
+				color:rgb(219, 13, 13);
+			}
+			.cat a:active{
+				color:rgb(55, 73, 151);
+			}
+            .user a:link{
+				color:rgb(55, 73, 151);
+                text-decoration: none;
+			}
+			.user a:visited{
+				color:rgb(55, 73, 151);
+			}
+			.user a:hover{
+				color:rgb(219, 13, 13);
+			}
+			.user a:active{
+				color:rgb(55, 73, 151);
+			}
+        </style>
+        
+    </body>
+</html>
